@@ -14,3 +14,6 @@ client/dist/
 # logs & os
 *.log
 .DS_Store
+
+# local tool settings
+.claude/
