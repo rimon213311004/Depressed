@@ -1022,3 +1022,35 @@ select:focus {
 @media (prefers-reduced-motion: reduce) {
   *, body::before, body::after { animation: none !important; }
 }
+
+/* ---------- Footer (copyright) ---------- */
+.app-footer {
+  max-width: 680px;
+  margin: 30px auto 24px;
+  padding: 18px 16px;
+  text-align: center;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.footer-brand {
+  font-family: "Sora", sans-serif;
+  font-weight: 800;
+  font-size: 16px;
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.footer-copy {
+  font-size: 13px;
+  color: var(--muted);
+}
+.footer-copy strong {
+  color: var(--text);
+}
+@media (max-width: 560px) {
+  /* clear the fixed bottom nav bar on phones */
+  .app-footer { margin-bottom: 90px; }
+}
