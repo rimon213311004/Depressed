@@ -23,22 +23,13 @@ const ALLOWED_ORIGINS = [
   "https://client-ashen-pi.vercel.app",
 ];
 
-const corsOptions = {
-  origin(origin, callback) {
-    if (!origin || ALLOWED_ORIGINS.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  credentials: true,
-};
-
-const io = new Server(server, { cors: corsOptions });
+const io = new Server(server, {
+  cors: { origin: ALLOWED_ORIGINS, credentials: true },
+});
 app.set("io", io); // make io reachable in route handlers via req.app.get("io")
 initSocket(io);
 
-app.use(cors(corsOptions));
+app.use(cors({ origin: ALLOWED_ORIGINS, credentials: true }));
 app.use(express.json({ limit: "10mb" }));
 
 app.get("/", (req, res) => res.send("Depressd API is running 💙"));
