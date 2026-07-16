@@ -18,9 +18,10 @@ await connectDB();
 const app = express();
 const server = http.createServer(app);
 
-const ALLOWED_ORIGINS = (process.env.CLIENT_URL || "http://localhost:5173")
-  .split(",")
-  .map((s) => s.trim());
+const ALLOWED_ORIGINS = [
+  "http://localhost:5173",
+  "https://client-ashen-pi.vercel.app",
+];
 
 const corsOptions = {
   origin(origin, callback) {
