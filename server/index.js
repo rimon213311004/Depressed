@@ -18,15 +18,26 @@ await connectDB();
 const app = express();
 const server = http.createServer(app);
 
-const CLIENT_URL = process.env.CLIENT_URL || "http://localhost:5173";
+const ALLOWED_ORIGINS = (process.env.CLIENT_URL || "http://localhost:5173")
+  .split(",")
+  .map((s) => s.trim());
 
-const io = new Server(server, {
-  cors: { origin: CLIENT_URL, credentials: true },
-});
+const corsOptions = {
+  origin(origin, callback) {
+    if (!origin || ALLOWED_ORIGINS.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
+};
+
+const io = new Server(server, { cors: corsOptions });
 app.set("io", io); // make io reachable in route handlers via req.app.get("io")
 initSocket(io);
 
-app.use(cors({ origin: CLIENT_URL, credentials: true }));
+app.use(cors(corsOptions));
 app.use(express.json({ limit: "10mb" }));
 
 app.get("/", (req, res) => res.send("Depressd API is running 💙"));
