@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: depressd-server
+    runtime: node
+    rootDir: server
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /
+    envVars:
+      - key: NODE_VERSION
+        value: 20.11.1
+      - key: PORT
+        value: 10000
+      # Set these in the Render dashboard (do NOT commit real secrets):
+      #   MONGO_URI, JWT_SECRET, JWT_EXPIRES,
+      #   CLOUDINARY_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET,
+      #   CLIENT_URL  (your Vercel URL, e.g. https://depressd.vercel.app)
